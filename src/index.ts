@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { Anthropic } from '@anthropic-ai/sdk';
+import { createBulkImportRoutes } from './bulk-import';
 
 interface D1Database {
   prepare(query: string): D1PreparedStatement;
@@ -319,6 +320,10 @@ app.post('/api/agents/auto-fill', async (c) => {
     return c.json({ error: 'Failed to auto-fill', message: String(error) }, 500);
   }
 });
+
+// Bulk import routes
+const bulkImportRoutes = createBulkImportRoutes();
+app.route('/api/bulk-import', bulkImportRoutes);
 
 // Export API
 export default app;
