@@ -4,8 +4,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: '/Reservation_welfare',
-  assetPrefix: '/Reservation_welfare',
+  // For Cloudflare Pages deployment
+  experimental: {
+    isrMemoryCacheSize: 0,
+  },
 }
 
 module.exports = nextConfig

@@ -1,0 +1,16 @@
+name = "muslim-welfare-frontend"
+type = "javascript"
+main = "index.js"
+site = { directory = "out" }
+
+[env.production]
+name = "muslim-welfare-frontend-prod"
+route = "reservation-welfare.pages.dev"
+
+[build]
+command = "npm run build"
+cwd = "."
+watch_paths = ["src/**/*.{ts,tsx,js,jsx,css}"]
+
+[build.upload]
+format = "service-worker"
