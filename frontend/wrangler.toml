@@ -1,11 +1,11 @@
-name = "muslim-welfare-frontend"
+name = "muslim-welfare"
 type = "javascript"
 main = "index.js"
 site = { directory = "out" }
 
 [env.production]
-name = "muslim-welfare-frontend-prod"
-route = "reservation-welfare.pages.dev"
+name = "muslim-welfare-prod"
+route = "muslim-welfare.pages.dev"
 
 [build]
 command = "npm run build"

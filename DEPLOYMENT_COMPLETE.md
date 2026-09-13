@@ -18,7 +18,7 @@ https://muslim-welfare-api.nazeersoft.workers.dev
 
 ### Frontend
 ```
-https://reservation-welfare.pages.dev
+https://muslim-welfare.pages.dev
 ```
 - Cloudflare Pages
 - Auto-deploy on push to main

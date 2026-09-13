@@ -44,10 +44,10 @@ jobs:
           secrets: |
             CLOUDFLARE_API_TOKEN
             CLOUDFLARE_ACCOUNT_ID
-          command: pages deploy ./frontend/out --project-name=reservation-welfare --branch=main
+          command: pages deploy ./frontend/out --project-name=muslim-welfare --branch=main
 
       - name: Deployment Status
         run: |
           echo "✅ Frontend deployed to Cloudflare Pages"
-          echo "📍 URL: https://reservation-welfare.pages.dev"
+          echo "📍 URL: https://muslim-welfare.pages.dev"
           echo "🔄 Auto-deploy enabled on push to main"
