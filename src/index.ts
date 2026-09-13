@@ -39,6 +39,22 @@ app.use('*', cors({
   allowHeaders: ['Content-Type', 'Authorization'],
 }));
 
+// Root endpoint
+app.get('/', (c) => {
+  return c.json({
+    name: 'Muslim Welfare AI System',
+    version: '1.0.0',
+    status: 'operational',
+    endpoints: {
+      health: '/health',
+      survey: '/api/survey/start',
+      agents: '/api/agents/*',
+      bulk_import: '/api/bulk-import/*',
+    },
+    documentation: 'https://github.com/OSCompliance/Reservation_welfare_State',
+  });
+});
+
 // Health check - simple endpoint
 app.get('/health', (c) => {
   try {
