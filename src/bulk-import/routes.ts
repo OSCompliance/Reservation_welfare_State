@@ -21,7 +21,7 @@ export function createBulkImportRoutes(): Hono<{ Bindings: Env }> {
   router.post('/upload', async (c) => {
     try {
       const formData = await c.req.formData();
-      const file = formData.get('file') as File;
+      const file = formData.get('file') as any;
 
       if (!file) {
         return c.json({ error: 'No file provided' }, 400);
@@ -115,7 +115,7 @@ export function createBulkImportRoutes(): Hono<{ Bindings: Env }> {
       }
 
       // Convert DB records back to ParsedRecord format
-      const parsedRecords = records.map((r) => r.raw_data);
+      const parsedRecords = records.map((r) => r.raw_data) as any[];
 
       // Process records
       const processor = createBulkProcessor(c.env.ANTHROPIC_API_KEY, 10);

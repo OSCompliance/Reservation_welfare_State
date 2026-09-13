@@ -51,21 +51,20 @@ export class BulkImportManager {
     try {
       const stmt = this.db.prepare(`
         INSERT INTO bulk_import_jobs
-        (job_id, status, file_name, file_type, total_records, processed_records, success_count, error_count, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (id, file_name, file_format, status, records_count, success_count, error_count, started_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       `);
 
       await stmt
         .bind(
-          job.job_id,
-          job.status,
-          job.file_name,
-          job.file_type,
-          job.total_records,
-          job.processed_records,
-          job.success_count,
-          job.error_count,
-          job.created_at
+          jobId,
+          fileName,
+          fileType,
+          'pending',
+          totalRecords,
+          0,
+          0,
+          new Date().toISOString()
         )
         .run();
 
@@ -87,11 +86,10 @@ export class BulkImportManager {
   ): Promise<void> {
     try {
       const updateFields: string[] = [
-        'processed_records = ?',
         'success_count = ?',
         'error_count = ?',
       ];
-      const params: any[] = [processedCount, successCount, errorCount];
+      const params: any[] = [successCount, errorCount];
 
       if (status) {
         updateFields.push('status = ?');
@@ -108,7 +106,7 @@ export class BulkImportManager {
       const query = `
         UPDATE bulk_import_jobs
         SET ${updateFields.join(', ')}
-        WHERE job_id = ?
+        WHERE id = ?
       `;
 
       await this.db.prepare(query).bind(...params).run();
@@ -154,7 +152,7 @@ export class BulkImportManager {
   async getJob(jobId: string): Promise<BulkImportJob | null> {
     try {
       const result = await this.db
-        .prepare('SELECT * FROM bulk_import_jobs WHERE job_id = ?')
+        .prepare('SELECT * FROM bulk_import_jobs WHERE id = ?')
         .bind(jobId)
         .first();
 
@@ -234,7 +232,7 @@ export class BulkImportManager {
       const result = await this.db
         .prepare(`
           SELECT * FROM bulk_import_jobs
-          ORDER BY created_at DESC
+          ORDER BY started_at DESC
           LIMIT ? OFFSET ?
         `)
         .bind(limit, offset)

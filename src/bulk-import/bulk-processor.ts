@@ -100,10 +100,11 @@ export class BulkProcessor {
 
       if (agentResult.errors.length > 0) {
         agentResult.errors.forEach((err) => {
+          const severity: 'error' | 'warning' = err.severity === 'error' ? 'error' : 'warning';
           errors.push({
             field: err.field || 'unknown',
             message: err.message,
-            severity: err.severity,
+            severity,
           });
         });
       }
