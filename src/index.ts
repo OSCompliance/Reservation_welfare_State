@@ -2,6 +2,8 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { Anthropic } from '@anthropic-ai/sdk';
 import { createBulkImportRoutes } from './bulk-import';
+import { createReportRoutes } from './reports';
+import { createAuthRoutes } from './auth';
 
 interface D1Database {
   prepare(query: string): D1PreparedStatement;
@@ -340,6 +342,14 @@ app.post('/api/agents/auto-fill', async (c) => {
 // Bulk import routes
 const bulkImportRoutes = createBulkImportRoutes();
 app.route('/api/bulk-import', bulkImportRoutes);
+
+// Report routes
+const reportRoutes = createReportRoutes();
+app.route('/api/reports', reportRoutes);
+
+// Auth routes
+const authRoutes = createAuthRoutes();
+app.route('/api/auth', authRoutes);
 
 // Export API
 export default app;
