@@ -1,0 +1,19 @@
+{
+  "name": "muslim-welfare-system",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240905.0",
+    "typescript": "^5.2.2",
+    "wrangler": "^3.29.0"
+  },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "@anthropic-ai/sdk": "^0.24.0"
+  }
+}
