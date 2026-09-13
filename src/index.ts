@@ -2,6 +2,28 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { Anthropic } from '@anthropic-ai/sdk';
 
+interface D1Database {
+  prepare(query: string): D1PreparedStatement;
+  exec(query: string): Promise<D1ExecResult>;
+}
+
+interface D1PreparedStatement {
+  bind(...values: any[]): D1PreparedStatement;
+  first(): Promise<any>;
+  all(): Promise<D1Result>;
+  run(): Promise<D1ExecResult>;
+}
+
+interface D1Result {
+  results: any[];
+  success: boolean;
+}
+
+interface D1ExecResult {
+  success: boolean;
+  results: D1Result[];
+}
+
 interface Env {
   DB: D1Database;
   ANTHROPIC_API_KEY: string;
@@ -228,6 +250,73 @@ app.post('/api/household', async (c) => {
   } catch (error) {
     console.error('Save household error:', error);
     return c.json({ error: 'Failed to save household data' }, 500);
+  }
+});
+
+// Agent auto-fill endpoint
+app.post('/api/agents/parse', async (c) => {
+  try {
+    const { input, language = 'en' } = await c.req.json();
+
+    if (!input) {
+      return c.json({ error: 'input is required' }, 400);
+    }
+
+    // Import coordinator dynamically
+    const { createCoordinator } = await import('./agents/coordinator');
+    const coordinator = createCoordinator(c.env.ANTHROPIC_API_KEY);
+
+    const state = await coordinator.orchestrate(input, language);
+
+    return c.json({
+      success: true,
+      parsed_data: state.parsedData,
+      confidence: state.confidence,
+      completeness: state.validationResult.completeness,
+      missing_fields: state.validationResult.missingFields,
+    });
+  } catch (error) {
+    console.error('Parse error:', error);
+    return c.json({ error: 'Failed to parse input', message: String(error) }, 500);
+  }
+});
+
+// Agent auto-fill form endpoint
+app.post('/api/agents/auto-fill', async (c) => {
+  try {
+    const { input, language = 'en' } = await c.req.json();
+
+    const { createCoordinator } = await import('./agents/coordinator');
+    const coordinator = createCoordinator(c.env.ANTHROPIC_API_KEY);
+
+    const state = await coordinator.orchestrate(input, language);
+
+    // Save to database
+    const householdId = `HH-${Date.now()}`;
+    await c.env.DB.prepare(
+      'INSERT INTO households (id, enumerator_id, survey_language, household_name, address, phone, total_members, muslim_members, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    ).bind(
+      householdId,
+      'agent',
+      language,
+      state.formData.household_name,
+      state.formData.address,
+      state.formData.phone,
+      state.formData.total_members,
+      state.formData.muslim_members,
+      'agent_filled'
+    ).run();
+
+    return c.json({
+      success: true,
+      household_id: householdId,
+      form_data: state.formData,
+      confidence: state.confidence,
+      ready_for_review: state.confidence > 70,
+    });
+  } catch (error) {
+    console.error('Auto-fill error:', error);
+    return c.json({ error: 'Failed to auto-fill', message: String(error) }, 500);
   }
 });
 

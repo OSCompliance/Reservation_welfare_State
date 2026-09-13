@@ -77,11 +77,11 @@ Rules:
     } catch (error) {
       console.error("Parser error:", error);
       return {
-        household_name: null,
-        address: null,
-        phone: null,
-        total_members: null,
-        muslim_members: null,
+        household_name: undefined,
+        address: undefined,
+        phone: undefined,
+        total_members: undefined,
+        muslim_members: undefined,
         members: [],
       };
     }

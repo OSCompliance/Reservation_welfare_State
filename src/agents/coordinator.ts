@@ -9,14 +9,17 @@ import { createMapperAgent } from "./mapper";
 export class AgentCoordinator {
   private apiKey: string;
   private config: AgentConfig;
-  private parser = createParserAgent(apiKey);
-  private validator = createValidatorAgent();
-  private enrichment = createEnrichmentAgent();
-  private mapper = createMapperAgent();
+  private parser: any;
+  private validator: any;
+  private enrichment: any;
+  private mapper: any;
 
   constructor(apiKey: string) {
     this.apiKey = apiKey;
     this.parser = createParserAgent(apiKey);
+    this.validator = createValidatorAgent();
+    this.enrichment = createEnrichmentAgent();
+    this.mapper = createMapperAgent();
     this.config = {
       apiKey,
       model: "claude-opus-4-1-20250805",
