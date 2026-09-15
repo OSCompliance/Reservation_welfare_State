@@ -28,6 +28,45 @@
   font-weight: 400;
 }
 
+/* Mode Selector */
+.modeSelector {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: slideUp 0.6s ease-out 0.1s backwards;
+}
+
+.modeButtons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.modeButton {
+  padding: 12px 24px;
+  border: 2px solid #cbd5e0;
+  background: white;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #4a5568;
+}
+
+.modeButton:hover {
+  border-color: #3182ce;
+  color: #3182ce;
+  transform: translateY(-2px);
+}
+
+.modeActive {
+  background: linear-gradient(135deg, #3182ce, #667eea) !important;
+  color: white !important;
+  border-color: #667eea !important;
+  box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3);
+}
+
 /* Progress */
 .progressContainer {
   margin-bottom: 50px;
@@ -425,6 +464,51 @@
   font-size: 16px;
   color: #276749;
   margin: 8px 0;
+}
+
+/* AI Info Section */
+.aiInfo {
+  background: linear-gradient(135deg, #edf2f7, #f7fafc);
+  border: 2px solid #bee3f8;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 30px 0;
+}
+
+.aiInfo h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 16px 0;
+}
+
+.aiInfo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.aiInfo li {
+  font-size: 16px;
+  color: #4a5568;
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.aiInfo li:last-child {
+  border-bottom: none;
+}
+
+/* Error Message */
+.errorMessage {
+  background: #fff5f5;
+  border: 2px solid #feb2b2;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  color: #c53030;
+  font-weight: 500;
+  animation: slideDown 0.3s ease-out;
 }
 
 /* Response Section */
