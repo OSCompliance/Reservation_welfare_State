@@ -4,6 +4,8 @@ import { Anthropic } from '@anthropic-ai/sdk';
 import { createBulkImportRoutes } from './bulk-import';
 import { createReportRoutes } from './reports';
 import { createAuthRoutes } from './auth';
+import { researchProjectsRoutes } from './api/routes/research-projects';
+import { governanceRoutes } from './api/routes/governance';
 
 interface D1Database {
   prepare(query: string): D1PreparedStatement;
@@ -450,6 +452,12 @@ Return ONLY valid JSON (no markdown):
     return c.json({ error: 'Failed to auto-fill data', message: String(error) }, 500);
   }
 });
+
+// Research Projects routes
+app.route('/api/projects', researchProjectsRoutes);
+
+// Governance routes (consent forms, IRB, access logs)
+app.route('/api/governance', governanceRoutes);
 
 // Bulk import routes
 const bulkImportRoutes = createBulkImportRoutes();
