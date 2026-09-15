@@ -1,0 +1,307 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f7ff 0%, #f0eeff 100%);
+  padding: 40px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.headerContent h1 {
+  font-size: 42px;
+  font-weight: 600;
+  color: #2d2d2d;
+  margin: 0 0 4px 0;
+}
+
+.headerContent p {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #e8f0ff;
+  color: #5a7fbf;
+  font-weight: 500;
+}
+
+/* Statistics Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 50px;
+}
+
+.statCard {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #e8e8e8;
+}
+
+.statLabel {
+  margin: 0;
+  font-size: 13px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-weight: 500;
+}
+
+.statValue {
+  margin: 8px 0 0 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: #534ab7;
+}
+
+/* Loading & Empty States */
+.loading,
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+  font-size: 16px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e8e8e8;
+}
+
+/* Studies List */
+.studiesList h2 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #2d2d2d;
+  margin: 0 0 20px 0;
+}
+
+.studiesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 50px;
+}
+
+.studyCard {
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  padding: 20px;
+  transition: all 0.2s ease;
+}
+
+.studyCard:hover {
+  border-color: #534ab7;
+  box-shadow: 0 4px 16px rgba(83, 74, 183, 0.1);
+}
+
+.studyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.studyMeta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.studyNumber {
+  font-size: 11px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.studyType {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+}
+
+.status {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.statusSuccess {
+  background: #d4edda;
+  color: #155724;
+}
+
+.statusWarning {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.statusInfo {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.statusSecondary {
+  background: #e8e8e8;
+  color: #666;
+}
+
+.studyContent {
+  margin-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 12px;
+}
+
+.studyContent h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #2d2d2d;
+  margin: 0 0 6px 0;
+}
+
+.description {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.studyFooter {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+
+.footerItem {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.label {
+  color: #999;
+  font-weight: 500;
+}
+
+.value {
+  color: #2d2d2d;
+  font-weight: 500;
+}
+
+.viewButton {
+  padding: 8px 16px;
+  background: #534ab7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: auto;
+}
+
+.viewButton:hover {
+  background: #3d3580;
+  transform: translateX(2px);
+}
+
+/* Ethics Section */
+.ethicsSection {
+  margin-top: 60px;
+}
+
+.ethicsSection h2 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #2d2d2d;
+  margin: 0 0 24px 0;
+}
+
+.ethicsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.ethicsCard {
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  padding: 16px;
+  transition: all 0.2s ease;
+}
+
+.ethicsCard:hover {
+  border-color: #534ab7;
+  box-shadow: 0 4px 12px rgba(83, 74, 183, 0.1);
+}
+
+.ethicsCard h4 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2d2d2d;
+  margin: 0 0 8px 0;
+}
+
+.ethicsCard p {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 16px;
+  }
+
+  .headerContent h1 {
+    font-size: 28px;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .studyFooter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .viewButton {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .ethicsGrid {
+    grid-template-columns: 1fr;
+  }
+}
