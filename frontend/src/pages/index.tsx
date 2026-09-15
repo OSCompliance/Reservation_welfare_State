@@ -1,5 +1,6 @@
 // Home page - Survey entry
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { MultilingualSurvey } from '@/components/MultilingualSurvey';
 import type { Language } from '@/lib/languages';
 
@@ -22,7 +23,20 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-indigo-700">
+      {/* Navigation */}
+      <nav className="bg-blue-900 text-white p-4">
+        <div className="max-w-6xl mx-auto flex justify-between items-center">
+          <h2 className="text-xl font-bold">Muslim Welfare AI System</h2>
+          <div className="space-x-4">
+            <Link href="/survey" className="hover:text-blue-200">Survey</Link>
+            <Link href="/agents" className="hover:text-blue-200">Agents</Link>
+            <Link href="/reports" className="hover:text-blue-200">Reports</Link>
+          </div>
+        </div>
+      </nav>
+
+      <div className="flex items-center justify-center p-4 min-h-[calc(100vh-64px)]">
       <div className="bg-white rounded-lg shadow-2xl p-8 max-w-md w-full">
         <h1 className="text-4xl font-bold text-center text-gray-900 mb-2">
           Muslim Welfare
@@ -105,6 +119,7 @@ export default function Home() {
             <li>Real-time validation</li>
           </ul>
         </div>
+      </div>
       </div>
     </div>
   );
