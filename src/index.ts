@@ -9,6 +9,8 @@ import { governanceRoutes } from './api/routes/governance';
 import { consentManagementRoutes } from './api/routes/consent-management';
 import { irbWorkflowRoutes } from './api/routes/irb-workflow';
 import { rbacManagementRoutes } from './api/routes/rbac-management';
+import { lookupsRoutes } from './api/routes/lookups';
+import { surveyEnhancedRoutes } from './api/routes/survey-enhanced';
 
 interface D1Database {
   prepare(query: string): D1PreparedStatement;
@@ -598,6 +600,12 @@ app.route('/api/reports', reportRoutes);
 // Auth routes
 const authRoutes = createAuthRoutes();
 app.route('/api/auth', authRoutes);
+
+// Lookups routes (districts, religions, sub-communities, etc.)
+app.route('/api/lookups', lookupsRoutes);
+
+// Enhanced Survey routes (with demographics)
+app.route('/api/survey', surveyEnhancedRoutes);
 
 // Export API
 export default app;
