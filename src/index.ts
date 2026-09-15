@@ -72,6 +72,85 @@ app.get('/health', (c) => {
   }
 });
 
+// Initialize database - create governance tables
+app.post('/api/init', async (c) => {
+  try {
+    const db = c.env.DB;
+
+    // Create tables
+    const tables = [
+      `CREATE TABLE IF NOT EXISTS research_projects (
+        id TEXT PRIMARY KEY, title TEXT NOT NULL, description TEXT, budget_amount REAL NOT NULL,
+        status TEXT DEFAULT 'planning', project_type TEXT DEFAULT 'primary_survey',
+        lead_researcher_id TEXT, start_date DATE, end_date DATE, created_by TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP)`,
+
+      `CREATE TABLE IF NOT EXISTS study_phases (
+        id TEXT PRIMARY KEY, project_id TEXT NOT NULL, phase_name TEXT NOT NULL,
+        phase_type TEXT, status TEXT DEFAULT 'pending', completion_percentage REAL DEFAULT 0,
+        target_start_date DATE, target_end_date DATE, created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (project_id) REFERENCES research_projects(id))`,
+
+      `CREATE TABLE IF NOT EXISTS project_budgets (
+        id TEXT PRIMARY KEY, project_id TEXT NOT NULL, category TEXT NOT NULL, description TEXT,
+        amount REAL NOT NULL, status TEXT DEFAULT 'allocated', created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (project_id) REFERENCES research_projects(id))`,
+
+      `CREATE TABLE IF NOT EXISTS consent_forms (
+        id TEXT PRIMARY KEY, project_id TEXT NOT NULL, version TEXT DEFAULT '1.0',
+        language TEXT NOT NULL, title TEXT NOT NULL, content TEXT NOT NULL, status TEXT DEFAULT 'draft',
+        approval_date DATE, approved_by TEXT, created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (project_id) REFERENCES research_projects(id))`,
+
+      `CREATE TABLE IF NOT EXISTS consent_signatures (
+        id TEXT PRIMARY KEY, consent_form_id TEXT NOT NULL, household_id TEXT NOT NULL,
+        consent_given BOOLEAN, signature_method TEXT DEFAULT 'digital', audio_file_path TEXT,
+        signed_at DATETIME, ip_address TEXT, device_id TEXT, created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (consent_form_id) REFERENCES consent_forms(id),
+        FOREIGN KEY (household_id) REFERENCES households(id))`,
+
+      `CREATE TABLE IF NOT EXISTS irb_submissions (
+        id TEXT PRIMARY KEY, project_id TEXT NOT NULL, submission_date DATE, status TEXT DEFAULT 'pending',
+        protocol_document TEXT, risk_level TEXT DEFAULT 'low', review_notes TEXT, approved_date DATE,
+        approved_by TEXT, validity_end_date DATE, created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (project_id) REFERENCES research_projects(id))`,
+
+      `CREATE TABLE IF NOT EXISTS data_access_logs (
+        id TEXT PRIMARY KEY, project_id TEXT, researcher_id TEXT, table_accessed TEXT, action TEXT,
+        record_ids_accessed INT, pii_exposed BOOLEAN DEFAULT FALSE, access_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+        ip_address TEXT, device_id TEXT,
+        FOREIGN KEY (project_id) REFERENCES research_projects(id))`,
+
+      `CREATE TABLE IF NOT EXISTS governance_policies (
+        id TEXT PRIMARY KEY, name TEXT NOT NULL, policy_type TEXT NOT NULL, status TEXT DEFAULT 'active',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP)`
+    ];
+
+    for (const sql of tables) {
+      try {
+        await db.prepare(sql).run();
+      } catch (err) {
+        // Table might already exist
+      }
+    }
+
+    // Seed governance policies
+    const seedSql = `INSERT OR IGNORE INTO governance_policies (id, name, policy_type) VALUES
+      ('policy_consent', 'Informed Consent Policy', 'consent'),
+      ('policy_irb', 'IRB Review Policy', 'irb'),
+      ('policy_security', 'Data Security Policy', 'security'),
+      ('policy_community', 'Community Return Policy', 'community_return'),
+      ('policy_opendata', 'Open Data Policy', 'open_data'),
+      ('policy_equity', 'Researcher Equity Policy', 'equity')`;
+
+    await db.prepare(seedSql).run();
+
+    return c.json({ success: true, message: 'Database initialized successfully' });
+  } catch (error: any) {
+    return c.json({ success: false, error: error.message }, 500);
+  }
+});
+
 // Start survey - get first question
 app.post('/api/survey/start', async (c) => {
   try {
