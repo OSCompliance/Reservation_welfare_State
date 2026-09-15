@@ -248,27 +248,104 @@ app.get('/api/household/:householdId', async (c) => {
 app.post('/api/household', async (c) => {
   try {
     const data = await c.req.json();
-    const { householdId, totalMembers, muslimMembers, ...otherData } = data;
+    const { householdId, totalMembers, muslimMembers, members, ...otherData } = data;
 
     if (!householdId) {
       return c.json({ error: 'Missing household ID' }, 400);
     }
 
+    // Save household
     await c.env.DB.prepare(
       'UPDATE households SET total_members = ?, muslim_members = ?, household_name = ?, address = ?, phone = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
     ).bind(
-      totalMembers,
-      muslimMembers,
+      totalMembers || members?.length || 0,
+      muslimMembers || 0,
       otherData.householdName,
       otherData.address,
       otherData.phone,
       householdId
     ).run();
 
-    return c.json({ success: true, householdId });
+    // Save members if provided
+    if (members && Array.isArray(members)) {
+      for (const member of members) {
+        const memberId = `member_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        await c.env.DB.prepare(
+          'INSERT INTO members (id, household_id, name, age, gender, is_muslim, occupation, monthly_income) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+        ).bind(
+          memberId,
+          householdId,
+          member.name,
+          member.age || null,
+          member.gender || null,
+          member.is_muslim ? 1 : 0,
+          member.occupation || null,
+          member.monthly_income || null
+        ).run();
+      }
+    }
+
+    return c.json({
+      success: true,
+      householdId,
+      membersCount: members?.length || 0
+    });
   } catch (error) {
     console.error('Save household error:', error);
     return c.json({ error: 'Failed to save household data' }, 500);
+  }
+});
+
+// Save parsed household (from agents)
+app.post('/api/household/save-parsed', async (c) => {
+  try {
+    const { householdName, address, phone, members } = await c.req.json();
+
+    if (!householdName || !members || members.length === 0) {
+      return c.json({ error: 'Missing required fields' }, 400);
+    }
+
+    // Create household
+    const householdId = `hh_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    await c.env.DB.prepare(
+      'INSERT INTO households (id, household_name, address, phone, total_members, muslim_members, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)'
+    ).bind(
+      householdId,
+      householdName,
+      address || '',
+      phone || '',
+      members.length,
+      0,
+      'completed'
+    ).run();
+
+    // Save members
+    for (const member of members) {
+      const memberId = `member_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      await c.env.DB.prepare(
+        'INSERT INTO members (id, household_id, name, age, gender, is_muslim, occupation, monthly_income, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)'
+      ).bind(
+        memberId,
+        householdId,
+        member.name,
+        member.age || null,
+        member.gender || null,
+        1,
+        member.occupation || null,
+        member.monthly_income || null
+      ).run();
+    }
+
+    return c.json({
+      success: true,
+      householdId,
+      householdName,
+      membersCount: members.length,
+      message: 'Household saved successfully'
+    });
+  } catch (error) {
+    console.error('Save parsed household error:', error);
+    return c.json({ error: 'Failed to save household', message: String(error) }, 500);
   }
 });
 
