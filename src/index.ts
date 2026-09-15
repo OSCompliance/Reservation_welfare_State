@@ -6,6 +6,9 @@ import { createReportRoutes } from './reports';
 import { createAuthRoutes } from './auth';
 import { researchProjectsRoutes } from './api/routes/research-projects';
 import { governanceRoutes } from './api/routes/governance';
+import { consentManagementRoutes } from './api/routes/consent-management';
+import { irbWorkflowRoutes } from './api/routes/irb-workflow';
+import { rbacManagementRoutes } from './api/routes/rbac-management';
 
 interface D1Database {
   prepare(query: string): D1PreparedStatement;
@@ -537,6 +540,15 @@ app.route('/api/projects', researchProjectsRoutes);
 
 // Governance routes (consent forms, IRB, access logs)
 app.route('/api/governance', governanceRoutes);
+
+// Consent Management routes (AI-powered forms, signatures, audit)
+app.route('/api/consent', consentManagementRoutes);
+
+// IRB Workflow routes (submissions, board meetings, decisions)
+app.route('/api/irb', irbWorkflowRoutes);
+
+// RBAC Management routes (roles, permissions, access control)
+app.route('/api/rbac', rbacManagementRoutes);
 
 // Bulk import routes
 const bulkImportRoutes = createBulkImportRoutes();
