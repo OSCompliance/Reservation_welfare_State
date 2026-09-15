@@ -1,8 +1,8 @@
-/* Home Page - Futuristic Silicon Valley Style */
+/* Home Page - DoorDash Style Red UI */
 
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f1e 0%, #1a0f2e 50%, #0f1f3f 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
   position: relative;
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
@@ -17,12 +17,12 @@
   bottom: 0;
   background: radial-gradient(
     circle at 20% 50%,
-    rgba(102, 126, 234, 0.1) 0%,
+    rgba(220, 53, 69, 0.08) 0%,
     transparent 50%
   ),
   radial-gradient(
     circle at 80% 80%,
-    rgba(118, 75, 162, 0.1) 0%,
+    rgba(255, 107, 53, 0.08) 0%,
     transparent 50%
   );
   pointer-events: none;
@@ -35,11 +35,11 @@
   right: 0;
   bottom: 0;
   background-image:
-    linear-gradient(rgba(102, 126, 234, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(102, 126, 234, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(220, 53, 69, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(220, 53, 69, 0.02) 1px, transparent 1px);
   background-size: 50px 50px;
   pointer-events: none;
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 /* Header */
@@ -47,31 +47,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
-  background: rgba(15, 15, 30, 0.5);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  padding: 16px 40px;
+  background: white;
+  border-bottom: 3px solid #dc3545;
   position: relative;
   z-index: 10;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.1);
 }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-weight: 700;
-  font-size: 24px;
+  font-weight: 800;
+  font-size: 28px;
 }
 
 .logoText {
-  font-size: 32px;
+  font-size: 36px;
 }
 
 .logoName {
-  background: linear-gradient(135deg, #00d4ff, #667eea);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #dc3545;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
 /* Language Selector */
@@ -84,19 +83,21 @@
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  background: rgba(102, 126, 234, 0.1);
-  border: 2px solid rgba(102, 126, 234, 0.3);
+  background: #f8f9fa;
+  border: 2px solid #dc3545;
   border-radius: 8px;
-  color: #00d4ff;
+  color: #dc3545;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   transition: all 0.3s ease;
 }
 
 .languageButton:hover {
-  background: rgba(102, 126, 234, 0.2);
-  border-color: rgba(102, 126, 234, 0.5);
+  background: #dc3545;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(220, 53, 69, 0.3);
 }
 
 .chevron {
@@ -108,13 +109,12 @@
   top: 100%;
   right: 0;
   margin-top: 8px;
-  background: rgba(26, 15, 46, 0.95);
-  backdrop-filter: blur(20px);
-  border: 2px solid rgba(102, 126, 234, 0.3);
+  background: white;
+  border: 2px solid #dc3545;
   border-radius: 12px;
   overflow: hidden;
   min-width: 220px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 12px 40px rgba(220, 53, 69, 0.25);
   z-index: 1000;
 }
 
@@ -126,21 +126,29 @@
   padding: 12px 16px;
   background: transparent;
   border: none;
-  color: #cbd5e0;
+  color: #2d3436;
   cursor: pointer;
   text-align: left;
   font-size: 14px;
+  font-weight: 500;
   transition: all 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.languageOption:last-child {
+  border-bottom: none;
 }
 
 .languageOption:hover {
-  background: rgba(102, 126, 234, 0.2);
-  color: #00d4ff;
+  background: #fff5f5;
+  color: #dc3545;
+  font-weight: 600;
 }
 
 .languageOption.active {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
-  color: #00d4ff;
+  background: #fff5f5;
+  color: #dc3545;
+  font-weight: 700;
 }
 
 .langName {
@@ -164,39 +172,38 @@
 
 .heroContent {
   text-align: center;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
 }
 
 .title {
-  font-size: 64px;
-  font-weight: 800;
-  margin: 0 0 20px 0;
-  background: linear-gradient(135deg, #00d4ff 0%, #667eea 50%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 72px;
+  font-weight: 900;
+  margin: 0 0 16px 0;
+  color: #dc3545;
   letter-spacing: -2px;
+  line-height: 1.1;
 }
 
 .subtitle {
   font-size: 20px;
-  color: #a0aec0;
+  color: #555;
   margin: 0 0 50px 0;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  font-weight: 400;
+  line-height: 1.6;
 }
 
 /* Survey Form */
 .surveyForm {
-  background: rgba(45, 55, 72, 0.4);
-  backdrop-filter: blur(20px);
-  border: 2px solid rgba(102, 126, 234, 0.2);
-  border-radius: 20px;
+  background: white;
+  border: 2px solid #dc3545;
+  border-radius: 16px;
   padding: 40px;
   max-width: 600px;
   margin: 0 auto;
-  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 16px 48px rgba(220, 53, 69, 0.12);
 }
 
 .formGroup {
@@ -206,8 +213,8 @@
 .formGroup label {
   display: block;
   font-size: 13px;
-  font-weight: 600;
-  color: #a0aec0;
+  font-weight: 700;
+  color: #2d3436;
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -216,24 +223,25 @@
 .input {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(26, 26, 46, 0.8);
-  border: 2px solid rgba(102, 126, 234, 0.2);
+  background: #f9f9f9;
+  border: 2px solid #eeeeee;
   border-radius: 8px;
-  color: #cbd5e0;
+  color: #2d3436;
   font-size: 14px;
   font-family: inherit;
+  font-weight: 500;
   transition: all 0.3s ease;
 }
 
 .input:focus {
   outline: none;
-  border-color: #667eea;
-  background: rgba(26, 26, 46, 0.95);
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #dc3545;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
 }
 
 .input::placeholder {
-  color: #718096;
+  color: #999;
 }
 
 /* Button Group */
@@ -249,7 +257,7 @@
   border: none;
   border-radius: 8px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -260,39 +268,45 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   white-space: nowrap;
+  font-family: inherit;
 }
 
 .primary {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: #dc3545;
   color: white;
-  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 24px rgba(220, 53, 69, 0.3);
 }
 
 .primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 48px rgba(102, 126, 234, 0.4);
+  background: #bb2d3b;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(220, 53, 69, 0.4);
 }
 
 .secondary {
-  background: linear-gradient(135deg, #00d4ff, #667eea);
+  background: #ff6b35;
   color: white;
-  box-shadow: 0 8px 32px rgba(0, 212, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.25);
 }
 
 .secondary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 48px rgba(0, 212, 255, 0.3);
+  background: #e55a23;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(255, 107, 53, 0.35);
 }
 
 .outline {
   background: transparent;
-  border: 2px solid rgba(102, 126, 234, 0.4);
-  color: #00d4ff;
+  border: 3px solid #dc3545;
+  color: #dc3545;
+  font-weight: 700;
 }
 
 .outline:hover {
-  background: rgba(102, 126, 234, 0.1);
-  border-color: rgba(102, 126, 234, 0.6);
+  background: #dc3545;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(220, 53, 69, 0.3);
 }
 
 /* Features Section */
@@ -302,14 +316,12 @@
 }
 
 .sectionTitle {
-  font-size: 36px;
-  font-weight: 700;
+  font-size: 48px;
+  font-weight: 900;
   text-align: center;
   margin-bottom: 60px;
-  background: linear-gradient(135deg, #00d4ff, #667eea);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #dc3545;
+  letter-spacing: -1px;
 }
 
 .featureGrid {
@@ -319,9 +331,8 @@
 }
 
 .featureCard {
-  background: rgba(45, 55, 72, 0.3);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(102, 126, 234, 0.2);
+  background: white;
+  border: 2px solid #eeeeee;
   border-radius: 16px;
   padding: 30px 20px;
   text-align: center;
@@ -330,10 +341,10 @@
 }
 
 .featureCard:hover {
-  transform: translateY(-8px);
-  border-color: rgba(102, 126, 234, 0.5);
-  background: rgba(45, 55, 72, 0.5);
-  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.1);
+  transform: translateY(-12px);
+  border-color: #dc3545;
+  background: #fff5f5;
+  box-shadow: 0 20px 48px rgba(220, 53, 69, 0.15);
 }
 
 .featureIcon {
@@ -344,9 +355,9 @@
 
 .featureCard p {
   font-size: 14px;
-  color: #cbd5e0;
+  color: #555;
   margin: 0;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.6;
 }
 
@@ -354,12 +365,14 @@
 .footer {
   text-align: center;
   padding: 40px 20px;
-  color: #718096;
+  color: #999;
   font-size: 14px;
-  border-top: 1px solid rgba(102, 126, 234, 0.1);
+  border-top: 2px solid #dc3545;
   margin-top: 100px;
   position: relative;
   z-index: 5;
+  background: white;
+  font-weight: 500;
 }
 
 /* Animations */
@@ -377,13 +390,13 @@
 /* Responsive */
 @media (max-width: 768px) {
   .header {
-    padding: 16px 20px;
+    padding: 12px 16px;
     flex-direction: column;
     gap: 16px;
   }
 
   .title {
-    font-size: 40px;
+    font-size: 48px;
     letter-spacing: -1px;
   }
 
@@ -393,6 +406,7 @@
 
   .surveyForm {
     padding: 24px;
+    border-radius: 12px;
   }
 
   .buttonGroup {
@@ -408,10 +422,67 @@
   }
 
   .sectionTitle {
-    font-size: 28px;
+    font-size: 36px;
   }
 
   .featureIcon {
     font-size: 36px;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  .logoText {
+    font-size: 28px;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 480px) {
+  .container {
+    padding: 0;
+  }
+
+  .header {
+    padding: 12px;
+  }
+
+  .mainContent {
+    padding: 30px 12px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+
+  .surveyForm {
+    padding: 20px;
+  }
+
+  .formGroup {
+    margin-bottom: 16px;
+  }
+
+  .button {
+    padding: 12px 16px;
+    font-size: 12px;
+  }
+
+  .featureCard {
+    padding: 20px 16px;
+  }
+
+  .featureIcon {
+    font-size: 32px;
+  }
+
+  .featureCard p {
+    font-size: 12px;
   }
 }
